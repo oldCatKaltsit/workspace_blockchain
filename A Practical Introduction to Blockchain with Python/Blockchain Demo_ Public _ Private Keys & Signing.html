@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)https://andersbrownworth.com/blockchain/public-private-keys/keys -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="description" content="Public / private key pair demo in a browser."><meta name="author" content="Anders Brownworth"><link rel="icon" href="https://andersbrownworth.com/favicon.ico"><title>Blockchain Demo: Public / Private Keys &amp; Signing</title><link rel="stylesheet" href="./Blockchain Demo_ Public _ Private Keys &amp; Signing_files/bootstrap.min.css"><link rel="stylesheet" href="./Blockchain Demo_ Public _ Private Keys &amp; Signing_files/public-key-private-key.css"><script src="./Blockchain Demo_ Public _ Private Keys &amp; Signing_files/jquery.min.js.下载"></script><script src="./Blockchain Demo_ Public _ Private Keys &amp; Signing_files/popper.min.js.下载"></script><script src="./Blockchain Demo_ Public _ Private Keys &amp; Signing_files/bootstrap.min.js.下载"></script><script src="./Blockchain Demo_ Public _ Private Keys &amp; Signing_files/js.cookie.min.js.下载"></script><script src="./Blockchain Demo_ Public _ Private Keys &amp; Signing_files/BigInteger.min.js.下载"></script><script src="./Blockchain Demo_ Public _ Private Keys &amp; Signing_files/Buffer.js.下载"></script><script src="./Blockchain Demo_ Public _ Private Keys &amp; Signing_files/elliptic.js.下载"></script><script src="./Blockchain Demo_ Public _ Private Keys &amp; Signing_files/spin.min.js.下载"></script><style type="text/css"></style><script src="./Blockchain Demo_ Public _ Private Keys &amp; Signing_files/ladda.min.js.下载"></script><script src="./Blockchain Demo_ Public _ Private Keys &amp; Signing_files/sha256.js.下载"></script><script src="./Blockchain Demo_ Public _ Private Keys &amp; Signing_files/blockchain.js.下载"></script></head><body data-new-gr-c-s-check-loaded="14.1223.0" data-gr-ext-installed=""><nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"><a class="navbar-brand" href="https://andersbrownworth.com/blockchain/public-private-keys/">Blockchain Demo: Public / Private Keys &amp; Signing</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar" aria-controls="collapsingNavbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="navbar-collapse collapse" id="collapsingNavbar"><ul class="navbar-nav ml-auto"><li class="nav-item active"><a class="nav-link" href="https://andersbrownworth.com/blockchain/public-private-keys/keys">Keys</a></li><li class="nav-item"><a class="nav-link" href="https://andersbrownworth.com/blockchain/public-private-keys/signatures">Signatures</a></li><li class="nav-item"><a class="nav-link" href="https://andersbrownworth.com/blockchain/public-private-keys/transaction">Transaction</a></li><li class="nav-item"><a class="nav-link" href="https://andersbrownworth.com/blockchain/public-private-keys/blockchain">Blockchain</a></li></ul></div></nav><div class="container"><div class="card"><h4 class="card-header">Public / Private Key Pairs</h4><div class="card-body"><form class="form-horizontal"><div class="form-group"><label class="control-label" for="data">Private Key</label><div class="input-group"><input class="form-control" id="privateKey" aria-label="Private Key" type="number"><span class="input-group-btn"><button class="btn btn-secondary" id="randomButton" type="button">Random</button></span></div></div><div class="form-group"><label class="control-label" for="data">Public Key</label><input class="form-control" id="publicKey" disabled=""></div></form></div></div></div><script>var EC = elliptic.elliptic().ec;
+var ec = new EC('secp256k1');
+
+var keypair = ec.genKeyPair();
+if (Cookies.get('privateKey')) {
+  keypair = ec.keyFromPrivate(Cookies.get('privateKey'));
+}
+
+function update() {
+  var prv = keypair.getPrivate('hex');
+  var pub = keypair.getPublic('hex');
+  $('#privateKey').val(bigInt(prv, 16).toString());
+  $('#publicKey').val(pub);
+  Cookies.set('privateKey', prv.toString());
+  Cookies.set('publicKey', pub.toString());
+}
+
+function random() {
+  keypair = ec.genKeyPair();
+  update();
+}
+
+$(function() {
+  $('#randomButton').click(random);
+  $('#privateKey').bind('keyup', function() {
+    $('#privateKey').val($('#privateKey').val().replace(/\D/g, ''));
+    keypair = ec.keyFromPrivate(bigInt($('#privateKey').val()).toString(16));
+    update();
+  });
+  update();
+});</script></body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
